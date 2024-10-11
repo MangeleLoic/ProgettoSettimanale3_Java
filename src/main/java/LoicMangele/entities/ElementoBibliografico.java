@@ -5,13 +5,14 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "elemento_bibliografico")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@NamedQuery(name = "findByTitleOrPartOF", query = "SELECT e FROM ElementoBibliografico e WHERE e.titolo Like :partialTitle")
 public abstract class ElementoBibliografico {
     @Id
     @GeneratedValue
     @Column(name = "codice_isbn", nullable = false,unique = true)
     protected long codiceIsbn;
     @Column(name = "titolo")
-    protected String Titolo;
+    protected String titolo;
     @Column(name = "anno_pubblicazione")
     protected int annoPubblicazione;
     @Column(name = "numero_pagine")
@@ -21,7 +22,7 @@ public abstract class ElementoBibliografico {
     }
 
     public ElementoBibliografico(String titolo, int annoPubblicazione, int numeroPagine) {
-        Titolo = titolo;
+        titolo = titolo;
         this.annoPubblicazione = annoPubblicazione;
         this.numeroPagine = numeroPagine;
     }
@@ -48,11 +49,11 @@ public abstract class ElementoBibliografico {
     }
 
     public String getTitolo() {
-        return Titolo;
+        return titolo;
     }
 
     public void setTitolo(String titolo) {
-        Titolo = titolo;
+        this.titolo = titolo;
     }
 
     @Override
@@ -60,7 +61,7 @@ public abstract class ElementoBibliografico {
         return "ElementoBibliografico{" +
                 "annoPubblicazione=" + annoPubblicazione +
                 ", codiceIsbn=" + codiceIsbn +
-                ", Titolo='" + Titolo + '\'' +
+                ", Titolo='" + titolo + '\'' +
                 ", numeroPagine=" + numeroPagine +
                 '}';
     }

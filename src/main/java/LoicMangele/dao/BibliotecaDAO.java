@@ -54,8 +54,8 @@ public class BibliotecaDAO {
     }
 
     public List<ElementoBibliografico> findByTitleOrPartOF(String partialTitle) {
-        TypedQuery<ElementoBibliografico> query = entityManager.createNamedQuery("findByNameStartsWith", ElementoBibliografico.class);
-        query.setParameter("partialName", partialTitle + "%");
+        TypedQuery<ElementoBibliografico> query = entityManager.createNamedQuery("findByTitleOrPartOF", ElementoBibliografico.class);
+        query.setParameter("partialTitle", "%" + partialTitle + "%");
         return query.getResultList();
     }
 }

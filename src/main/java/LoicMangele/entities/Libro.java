@@ -43,7 +43,7 @@ public class Libro extends ElementoBibliografico {
                 ", annoPubblicazione=" + annoPubblicazione +
                 ", codiceIsbn=" + codiceIsbn +
                 ", numeroPagine=" + numeroPagine +
-                ", Titolo='" + Titolo + '\'' +
+                ", Titolo='" + titolo + '\'' +
                 '}';
     }
 }

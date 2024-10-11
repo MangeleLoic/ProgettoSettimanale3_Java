@@ -34,7 +34,7 @@ public class Riviste extends ElementoBibliografico {
                 ", annoPubblicazione=" + annoPubblicazione +
                 ", codiceIsbn=" + codiceIsbn +
                 ", numeroPagine=" + numeroPagine +
-                ", Titolo='" + Titolo + '\'' +
+                ", Titolo='" + titolo + '\'' +
                 '}';
     }
 }

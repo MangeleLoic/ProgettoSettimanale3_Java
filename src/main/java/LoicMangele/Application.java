@@ -103,6 +103,11 @@ public class Application {
         List<ElementoBibliografico> elementoBibliografico6 = eb.findByAuthor("J. K.Rowling");
         System.out.println(elementoBibliografico6);
 
+        List<ElementoBibliografico> elementoBibliografico7 = eb.findByTitleOrPartOF("Shonen Jump");
+        System.out.println(elementoBibliografico7);
+        List<ElementoBibliografico> elementoBibliografico8 = eb.findByTitleOrPartOF("Harry");
+        System.out.println(elementoBibliografico8);
+
 
         em.close();
         emf.close();
