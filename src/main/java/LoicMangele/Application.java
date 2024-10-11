@@ -96,6 +96,8 @@ public class Application {
 
         //lascio questi elementi commentati per non duplicare i salvataggi
 
+        System.out.println("-----------Es.2------------");
+
         try {
             ElementoBibliografico elementoCatalogo = eb.findByISBN(7);
             System.out.println(elementoCatalogo);
@@ -111,6 +113,8 @@ public class Application {
         } catch (NotFoundException e) {
             System.out.println(e.getMessage());
         }
+
+        System.out.println("-----------Es.3------------");
 
         try {
 
@@ -142,18 +146,26 @@ public class Application {
             System.out.println(e.getMessage());
         }
 
+        System.out.println("-----------Es.4------------");
+
         List<ElementoBibliografico> elementoBibliografico3 = eb.findByYear(2005);
         List<ElementoBibliografico> elementoBibliografico5 = eb.findByYear(2035);
         System.out.println(elementoBibliografico3);
         System.out.println(elementoBibliografico5);
 
+        System.out.println("-----------Es.5------------");
+
         List<ElementoBibliografico> elementoBibliografico6 = eb.findByAuthor("J. K.Rowling");
         System.out.println(elementoBibliografico6);
+
+        System.out.println("-----------Es.6------------");
 
         List<ElementoBibliografico> elementoBibliografico7 = eb.findByTitleOrPartOF("Shonen Jump");
         System.out.println(elementoBibliografico7);
         List<ElementoBibliografico> elementoBibliografico8 = eb.findByTitleOrPartOF("Harry");
         System.out.println(elementoBibliografico8);
+
+        System.out.println("-----------Es.7------------");
 
 
         List<ElementoBibliografico> elementiInPrestito = eb.findPrestitiAttiviByNumeroDiTessera(3);
