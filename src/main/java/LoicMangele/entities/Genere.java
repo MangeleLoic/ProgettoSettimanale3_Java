@@ -5,5 +5,5 @@ public enum Genere {
     GIALLO,
     FANTASY,
     FANTASCIENZA,
-    STORICO
+
 }
