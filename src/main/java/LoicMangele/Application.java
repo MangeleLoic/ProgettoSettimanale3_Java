@@ -65,14 +65,43 @@ public class Application {
 
         //lascio questi elementi commentati per non duplicare i salvataggi
 
-        ElementoBibliografico elementoBibliografico = eb.findByISBN(21);
-        ElementoBibliografico elementoBibliografico2 = eb.findByISBN(3);
+        try {
 
-        System.out.println(elementoBibliografico);
-        System.out.println(elementoBibliografico2);
+            ElementoBibliografico elementoBibliografico4 = eb.findByISBN(86);
+
+
+            System.out.println(elementoBibliografico4);
+        } catch (NotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            ElementoBibliografico elementoBibliografico = eb.findByISBN(21);
+
+
+            System.out.println(elementoBibliografico);
+
+        } catch (NotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+
+            ElementoBibliografico elementoBibliografico2 = eb.findByISBN(3);
+
+
+
+            System.out.println(elementoBibliografico2);
+
+        } catch (NotFoundException e) {
+            System.out.println(e.getMessage());
+        }
 
         List<ElementoBibliografico> elementoBibliografico3 = eb.findByYear(2005);
+        List<ElementoBibliografico> elementoBibliografico5 = eb.findByYear(2035);
         System.out.println(elementoBibliografico3);
+        System.out.println(elementoBibliografico5);
+
+        List<ElementoBibliografico> elementoBibliografico6 = eb.findByAuthor("J. K.Rowling");
+        System.out.println(elementoBibliografico6);
 
 
         em.close();

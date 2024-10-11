@@ -1,8 +1,10 @@
 package LoicMangele.dao;
 
 import LoicMangele.entities.ElementoBibliografico;
+import LoicMangele.entities.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
@@ -26,10 +28,15 @@ public class BibliotecaDAO {
     public ElementoBibliografico findByISBN(long codiceIsbn) {
         TypedQuery<ElementoBibliografico> query = entityManager.createQuery("SELECT e FROM ElementoBibliografico e WHERE e.codiceIsbn = :isbn", ElementoBibliografico.class);
         query.setParameter("isbn", codiceIsbn);
-        return query.getSingleResult();
-
+       try {
+           return query.getSingleResult();
+       }
+       catch (NoResultException e) {
+           throw new NotFoundException(codiceIsbn);
+       }
 
     }
+
 
     public List<ElementoBibliografico> findByYear(int annoPubblicazione) {
         TypedQuery<ElementoBibliografico> query = entityManager.createQuery("SELECT e FROM ElementoBibliografico e WHERE e.annoPubblicazione = :annoPubblicazione", ElementoBibliografico.class);
@@ -37,5 +44,18 @@ public class BibliotecaDAO {
         return query.getResultList();
 
 
+    }
+
+    public List<ElementoBibliografico> findByAuthor(String autore) {
+        TypedQuery<ElementoBibliografico> query = entityManager.createQuery("SELECT e FROM ElementoBibliografico e WHERE e.autore = :autore", ElementoBibliografico.class);
+        query.setParameter("autore", autore);
+        return query.getResultList();
+
+    }
+
+    public List<ElementoBibliografico> findByTitleOrPartOF(String partialTitle) {
+        TypedQuery<ElementoBibliografico> query = entityManager.createNamedQuery("findByNameStartsWith", ElementoBibliografico.class);
+        query.setParameter("partialName", partialTitle + "%");
+        return query.getResultList();
     }
 }
