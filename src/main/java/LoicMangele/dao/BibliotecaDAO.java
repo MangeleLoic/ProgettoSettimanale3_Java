@@ -2,12 +2,14 @@ package LoicMangele.dao;
 
 import LoicMangele.entities.ElementoBibliografico;
 import LoicMangele.entities.NotFoundException;
+import LoicMangele.entities.Prestito;
 import LoicMangele.entities.Utente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class BibliotecaDAO {
@@ -17,7 +19,7 @@ public class BibliotecaDAO {
         this.entityManager = entityManager;
     }
 
-    public  void save(ElementoBibliografico elementoBibliografico) {
+    public void save(ElementoBibliografico elementoBibliografico) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(elementoBibliografico);
@@ -29,12 +31,11 @@ public class BibliotecaDAO {
     public ElementoBibliografico findByISBN(long codiceIsbn) {
         TypedQuery<ElementoBibliografico> query = entityManager.createQuery("SELECT e FROM ElementoBibliografico e WHERE e.codiceIsbn = :isbn", ElementoBibliografico.class);
         query.setParameter("isbn", codiceIsbn);
-       try {
-           return query.getSingleResult();
-       }
-       catch (NoResultException e) {
-           throw new NotFoundException(codiceIsbn);
-       }
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            throw new NotFoundException(codiceIsbn);
+        }
 
     }
 
@@ -60,7 +61,7 @@ public class BibliotecaDAO {
         return query.getResultList();
     }
 
-    public void Delete (long codiceIsbn) {
+    public void Delete(long codiceIsbn) {
         ElementoBibliografico found = this.findByISBN(codiceIsbn);
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
@@ -70,12 +71,44 @@ public class BibliotecaDAO {
         System.out.println("L'elemento Bibliografico " + found.getTitolo() + " è stato rimosso con successo");
     }
 
-    public  void saveUtente(Utente utente) {
+    public void saveUtente(Utente utente) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(utente);
         transaction.commit();
 
-        System.out.println("L'utente " +utente.getNome() + " " + utente.getCognome() + " è stato salvato con successo");
+        System.out.println("L'utente " + utente.getNome() + " " + utente.getCognome() + " è stato salvato con successo");
+    }
+
+    public void savePrestito(Prestito prestito) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(prestito);
+        transaction.commit();
+
+        System.out.println("Il prestito " + prestito.getPrestitoId() + " è stato salvato con successo");
+    }
+
+    public List<ElementoBibliografico> findPrestitiAttiviByNumeroDiTessera(long numeroTessera) {
+        TypedQuery<ElementoBibliografico> query = entityManager.createQuery("SELECT p.elementoBibliografico FROM Prestito p WHERE p.utente.numeroTessera = :numeroTessera AND p.dataRestituzioneEffettiva IS NULL", ElementoBibliografico.class);
+        query.setParameter("numeroTessera", numeroTessera);
+        return query.getResultList();
+    }
+
+    public void prestitoRestituito(long prestitoId) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        Prestito prestito = entityManager.find(Prestito.class, prestitoId);
+        if (prestito != null) {
+            prestito.setDataRestituzioneEffettiva(LocalDate.now());
+            entityManager.merge(prestito);
+            System.out.println("Prestito restituito con successo");
+        } else {
+            System.out.println("prestito non trovato");
+        }
+        transaction.commit();
+
+
     }
 }

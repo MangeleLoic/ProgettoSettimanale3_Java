@@ -12,8 +12,12 @@ public class Prestito {
     private long prestitoId;
 
     @ManyToOne
-    @JoinColumn(name = "utente")
+    @JoinColumn(name = "utente", nullable = false)
     private Utente utente;
+
+    @ManyToOne
+    @JoinColumn(name = "elemento_bibliografico_id")
+    private ElementoBibliografico elementoBibliografico;
 
     @Column(name = "data_inizio_prestito")
     private LocalDate dataInizioPrestito;
@@ -27,12 +31,19 @@ public class Prestito {
     public Prestito() {
     }
 
-    public Prestito(LocalDate dataInizioPrestito, LocalDate dataRestituzioneEffettiva, LocalDate dataRestituzionePrevista) {
+    public Prestito(Utente utente, LocalDate dataInizioPrestito, ElementoBibliografico elementoBibliografico) {
+        this.utente= utente;
         this.dataInizioPrestito = dataInizioPrestito;
-        this.dataRestituzioneEffettiva = dataRestituzioneEffettiva;
-        this.dataRestituzionePrevista = dataRestituzionePrevista;
+        this.dataRestituzionePrevista = calcolaDataRestituzionePrevista(dataInizioPrestito);
+        this.dataRestituzioneEffettiva = null;
+        this.elementoBibliografico =elementoBibliografico;
 
 
+
+    }
+
+    private LocalDate calcolaDataRestituzionePrevista(LocalDate dataInizioPrestito){
+        return dataInizioPrestito.plusDays(30);
     }
 
     public LocalDate getDataInizioPrestito() {
@@ -41,6 +52,7 @@ public class Prestito {
 
     public void setDataInizioPrestito(LocalDate dataInizioPrestito) {
         this.dataInizioPrestito = dataInizioPrestito;
+        this.dataRestituzionePrevista = calcolaDataRestituzionePrevista(dataInizioPrestito);
     }
 
     public LocalDate getDataRestituzioneEffettiva() {
@@ -63,12 +75,25 @@ public class Prestito {
         return prestitoId;
     }
 
+    public void setUtente(Utente utente) {
+        this.utente = utente;
+    }
+
+    public ElementoBibliografico getElementoBibliografico() {
+        return elementoBibliografico;
+    }
+
+    public void setElementoBibliografico(ElementoBibliografico elementoBibliografico) {
+        this.elementoBibliografico = elementoBibliografico;
+    }
+
     @Override
     public String toString() {
         return "Prestito{" +
                 "dataInizioPrestito=" + dataInizioPrestito +
                 ", prestitoId=" + prestitoId +
                 ", utente=" + utente +
+                ", elementoBibliografico=" + elementoBibliografico +
                 ", dataRestituzionePrevista=" + dataRestituzionePrevista +
                 ", dataRestituzioneEffettiva=" + dataRestituzioneEffettiva +
                 '}';

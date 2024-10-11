@@ -3,16 +3,20 @@ package LoicMangele.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "utenti")
 public class Utente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "numero_tessera", nullable = false, unique = true)
     private long numeroTessera;
     private String nome;
     private String cognome;
     private LocalDate dataDiNascita;
+    @OneToMany(mappedBy = "utente")
+    private List<Prestito> prestiti;
 
     public Utente() {
     }
@@ -52,6 +56,10 @@ public class Utente {
         return numeroTessera;
     }
 
+    public List<Prestito> getPrestiti() {
+        return prestiti;
+    }
+
     @Override
     public String toString() {
         return "Utente{" +
@@ -59,6 +67,7 @@ public class Utente {
                 ", numeroTessera=" + numeroTessera +
                 ", nome='" + nome + '\'' +
                 ", dataDiNascita=" + dataDiNascita +
+                ", prestiti=" + prestiti +
                 '}';
     }
 }

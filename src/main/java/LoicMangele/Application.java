@@ -39,15 +39,23 @@ public class Application {
         Riviste shonenJump3 = new Riviste("Shonen Jump", 2021, 190, Periodicita.SETTIMANALE);
         Riviste mulino = new Riviste("IlMulino", 2010, 160, Periodicita.SEMESTRALE);
         Riviste mulino2 = new Riviste("IlMulino", 2008, 130, Periodicita.SEMESTRALE);
-        Utente marioRossi = new Utente("Mario", "Rossi", LocalDate.of(1994,04, 29));
-        Utente giuliaVerdi = new Utente("Giulia", "Verdi", LocalDate.of(1997,02, 21));
-        Utente marcoNeri = new Utente("Marco", "Neri", LocalDate.of(1991,06, 14));
-        Utente lucaRosa = new Utente("Luca", "Rosa", LocalDate.of(1998,04, 19));
+        Utente marioRossi = new Utente("Maria", "Carboni", LocalDate.of(1996,04, 29));
+        Utente giuliaVerdi = new Utente("Giulio", "Vela", LocalDate.of(1997,07, 11));
+        Utente marcoNeri = new Utente("Marta", "Neschio", LocalDate.of(1992,01, 4));
+        Utente lucaRosa = new Utente("Lucia", "Roma", LocalDate.of(1990,04, 9));
+        ElementoBibliografico elementoBibliografico14 = nationalGeographic2;
+        ElementoBibliografico elementoBibliografico24 = nationalGeographic;
+        ElementoBibliografico elementoBibliografico34 = harryPotter3;
+        ElementoBibliografico elementoBibliografico44 =ilMastinoDeiBaskerville;
+        Prestito prestito1 = new Prestito(marcoNeri, LocalDate.of(2024,8,24),elementoBibliografico14);
+        Prestito prestito2 = new Prestito(marioRossi, LocalDate.of(2024,9,24),elementoBibliografico24);
+        Prestito prestito3 = new Prestito(lucaRosa, LocalDate.of(2024,10,4),elementoBibliografico34);
+        Prestito prestito4 = new Prestito(giuliaVerdi, LocalDate.of(2024,9,18),elementoBibliografico44);
 
 
         //lascio questi elementi commentati per non duplicare i salvataggi
 
-       /* eb.save(harryPotter1);
+        /*eb.save(harryPotter1);
         eb.save(harryPotter2);
         eb.save(harryPotter3);
         eb.save(harryPotter4);
@@ -73,7 +81,18 @@ public class Application {
         eb.saveUtente(marioRossi);
         eb.saveUtente(lucaRosa);
         eb.saveUtente(marcoNeri);
-        eb.saveUtente(giuliaVerdi);*/
+        eb.saveUtente(giuliaVerdi);
+        eb.savePrestito(prestito1);
+        eb.savePrestito(prestito2);
+        eb.savePrestito(prestito3);
+        eb.savePrestito(prestito4);
+        eb.prestitoRestituito(1);
+        eb.prestitoRestituito(2);
+        eb.prestitoRestituito(3);
+        eb.prestitoRestituito(5);
+        eb.prestitoRestituito(7);
+        eb.prestitoRestituito(8);*/
+
 
         //lascio questi elementi commentati per non duplicare i salvataggi
 
@@ -135,6 +154,12 @@ public class Application {
         System.out.println(elementoBibliografico7);
         List<ElementoBibliografico> elementoBibliografico8 = eb.findByTitleOrPartOF("Harry");
         System.out.println(elementoBibliografico8);
+
+
+        List<ElementoBibliografico> elementiInPrestito = eb.findPrestitiAttiviByNumeroDiTessera(3);
+        for (ElementoBibliografico elementoBibliografico : elementiInPrestito) {
+            System.out.println(elementoBibliografico);
+        }
 
 
 
