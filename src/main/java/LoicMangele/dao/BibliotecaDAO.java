@@ -2,6 +2,7 @@ package LoicMangele.dao;
 
 import LoicMangele.entities.ElementoBibliografico;
 import LoicMangele.entities.NotFoundException;
+import LoicMangele.entities.Utente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
@@ -57,5 +58,24 @@ public class BibliotecaDAO {
         TypedQuery<ElementoBibliografico> query = entityManager.createNamedQuery("findByTitleOrPartOF", ElementoBibliografico.class);
         query.setParameter("partialTitle", "%" + partialTitle + "%");
         return query.getResultList();
+    }
+
+    public void Delete (long codiceIsbn) {
+        ElementoBibliografico found = this.findByISBN(codiceIsbn);
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.remove(found);
+        transaction.commit();
+
+        System.out.println("L'elemento Bibliografico " + found.getTitolo() + " è stato rimosso con successo");
+    }
+
+    public  void saveUtente(Utente utente) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(utente);
+        transaction.commit();
+
+        System.out.println("L'utente " +utente.getNome() + " " + utente.getCognome() + " è stato salvato con successo");
     }
 }

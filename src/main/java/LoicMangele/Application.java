@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Application {
@@ -38,6 +39,13 @@ public class Application {
         Riviste shonenJump3 = new Riviste("Shonen Jump", 2021, 190, Periodicita.SETTIMANALE);
         Riviste mulino = new Riviste("IlMulino", 2010, 160, Periodicita.SEMESTRALE);
         Riviste mulino2 = new Riviste("IlMulino", 2008, 130, Periodicita.SEMESTRALE);
+        Utente marioRossi = new Utente("Mario", "Rossi", LocalDate.of(1994,04, 29));
+        Utente giuliaVerdi = new Utente("Giulia", "Verdi", LocalDate.of(1997,02, 21));
+        Utente marcoNeri = new Utente("Marco", "Neri", LocalDate.of(1991,06, 14));
+        Utente lucaRosa = new Utente("Luca", "Rosa", LocalDate.of(1998,04, 19));
+
+
+        //lascio questi elementi commentati per non duplicare i salvataggi
 
        /* eb.save(harryPotter1);
         eb.save(harryPotter2);
@@ -61,9 +69,29 @@ public class Application {
         eb.save(shonenJump2);
         eb.save(shonenJump3);
         eb.save(mulino);
-        eb.save(mulino2); */
+        eb.save(mulino2);
+        eb.saveUtente(marioRossi);
+        eb.saveUtente(lucaRosa);
+        eb.saveUtente(marcoNeri);
+        eb.saveUtente(giuliaVerdi);*/
 
         //lascio questi elementi commentati per non duplicare i salvataggi
+
+        try {
+            ElementoBibliografico elementoCatalogo = eb.findByISBN(7);
+            System.out.println(elementoCatalogo);
+            eb.Delete(7);
+        } catch (NotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            ElementoBibliografico elementoCatalogo = eb.findByISBN(92);
+            System.out.println(elementoCatalogo);
+            eb.Delete(92);
+        } catch (NotFoundException e) {
+            System.out.println(e.getMessage());
+        }
 
         try {
 
@@ -107,6 +135,8 @@ public class Application {
         System.out.println(elementoBibliografico7);
         List<ElementoBibliografico> elementoBibliografico8 = eb.findByTitleOrPartOF("Harry");
         System.out.println(elementoBibliografico8);
+
+
 
 
         em.close();

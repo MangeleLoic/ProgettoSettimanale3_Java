@@ -17,7 +17,7 @@ public class Utente {
     public Utente() {
     }
 
-    public Utente(String cognome, LocalDate dataDiNascita, String nome) {
+    public Utente(String nome, String cognome, LocalDate dataDiNascita) {
         this.cognome = cognome;
         this.dataDiNascita = dataDiNascita;
         this.nome = nome;
