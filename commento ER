@@ -1,0 +1,4 @@
+Ogni utente è associato ad una sola tessera con id
+ogni utente ha la possibiltà di effettuare più prestiti
+ogni prestito è possibile su un solo elemento bibliografico alla volta
+ogni libro e rivista ha un proprio id 
